@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Movies Tanzania</string>
+    <string name="channel_name">movies</string>
+    <string name="channel_description">movies</string>
+    <string name="view_trailer"><![CDATA[View Trailer & Show Times]]></string>
+    <string name="now_showing">Now Showing</string>
+    <string name="coming_soon">Coming Soon</string>
+    <string name="token_id">token_id</string>
+    <string name="token">token_prefs</string>
+    <string name="showing_at">Showing at:</string>
+    <string name="synopsis">Synopsis:</string>
+    <string name="label_genre">Genres:</string>
+    <string name="label_starring">Starring:</string>
+    <string name="label_duration">Duration:</string>
+    <string name="label_director">Directed by:</string>
+    <string name="book_now">Book Now!</string>
+    <string name="no_internet">This application requires internet to work. Please connect to the internet</string>
+</resources>

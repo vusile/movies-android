@@ -1,0 +1,97 @@
+{
+  "project_info": {
+    "project_number": "945033688859",
+    "project_id": "movies-tanzania",
+    "storage_bucket": "movies-tanzania.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945033688859:android:2aa6287fd599b1e18445be",
+        "android_client_info": {
+          "package_name": "com.moviestanzania"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945033688859-36fpun5bkj255gbosfalup0feto31r28.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuFuiyT_ulJBPcxNN0QBytfCeDm4-kLuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945033688859-36fpun5bkj255gbosfalup0feto31r28.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945033688859:android:9fe94127609285688445be",
+        "android_client_info": {
+          "package_name": "com.moviestanzania.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945033688859-36fpun5bkj255gbosfalup0feto31r28.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuFuiyT_ulJBPcxNN0QBytfCeDm4-kLuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945033688859-36fpun5bkj255gbosfalup0feto31r28.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945033688859:android:4ae0fd1777ae49278445be",
+        "android_client_info": {
+          "package_name": "com.moviestanzania.local.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945033688859-36fpun5bkj255gbosfalup0feto31r28.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuFuiyT_ulJBPcxNN0QBytfCeDm4-kLuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945033688859-36fpun5bkj255gbosfalup0feto31r28.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

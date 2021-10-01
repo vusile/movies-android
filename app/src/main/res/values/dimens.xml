@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="logo_padding">10dp</dimen>
+    <dimen name="title_font_size">20sp</dimen>
+    <dimen name="label_font_size">16sp</dimen>
+    <dimen name="value_font_size">@dimen/label_font_size</dimen>
+    <dimen name="activity_padding">10dp</dimen>
+    <dimen name="duration_genre_padding">10dp</dimen>
+    <dimen name="padding_booking_button">20dp</dimen>
+    <dimen name="padding_bottom_theater_show_times_view">15dp</dimen>
+    <dimen name="no_internet_size">18sp</dimen>
+</resources>

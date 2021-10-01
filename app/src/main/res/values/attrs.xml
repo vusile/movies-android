@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LabelValueView">
+        <attr name="label" format="string" />
+        <attr name="value" format="string" />
+    </declare-styleable>
+    <declare-styleable name="TheaterShowTimesView">
+        <attr name="theater_name" format="string" />
+        <attr name="pricing" format="string" />
+        <attr name="show_times" format="string" />
+    </declare-styleable>
+</resources>
