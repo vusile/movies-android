@@ -1,5 +1,7 @@
 package com.moviestanzania.services;
 
+import static android.app.PendingIntent.FLAG_CANCEL_CURRENT;
+
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,7 +31,6 @@ import java.net.URL;
 public class MoviesMessagingService extends FirebaseMessagingService{
     private static final String CHANNEL_ID = "movies";
     private int mMovieId;
-    private Movie mMovie;
 
     @Override
     public void onNewToken(@NonNull String token) {
@@ -53,7 +54,6 @@ public class MoviesMessagingService extends FirebaseMessagingService{
         super.onMessageReceived(remoteMessage);
 
         mMovieId = Integer.parseInt(remoteMessage.getData().get("id"));
-        Log.d("TAG", "getIntent: What's happening?" + mMovieId);
         getMovie(remoteMessage);
 
     }
@@ -68,15 +68,10 @@ public class MoviesMessagingService extends FirebaseMessagingService{
                         JsonObject moviesObject = result.getAsJsonObject("data");
                         Movie movie = Movie.getMovie(moviesObject);
 
-                        Log.d("TAG", "getIntent getMovie: " + movie.getName());
-
                         String posterUrl = remoteMessage.getData().get("poster");
                         Intent intent = MoviesDetailActivity.getIntent(getBaseContext(), movie);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        Intent[] intents = new Intent[2];
-                        intents[0] = intent;
-                        intents[1] = MainActivity.getIntent(getBaseContext());
-                        PendingIntent pendingIntent = PendingIntent.getActivities(getBaseContext(), 0, intents, 0);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), movie.getId(), intent, FLAG_CANCEL_CURRENT);
 
                         Bitmap poster = null;
                         try {
