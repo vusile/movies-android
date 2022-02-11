@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -12,8 +13,14 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.moviestanzania.Constants;
 import com.moviestanzania.R;
+import com.moviestanzania.activities.MainActivity;
 import com.moviestanzania.activities.MoviesDetailActivity;
+import com.moviestanzania.objects.Movie;
 import com.moviestanzania.utils.TokenUtil;
 
 import java.io.IOException;
@@ -22,6 +29,7 @@ import java.net.URL;
 public class MoviesMessagingService extends FirebaseMessagingService{
     private static final String CHANNEL_ID = "movies";
     private int mMovieId;
+    private Movie mMovie;
 
     @Override
     public void onNewToken(@NonNull String token) {
@@ -45,39 +53,60 @@ public class MoviesMessagingService extends FirebaseMessagingService{
         super.onMessageReceived(remoteMessage);
 
         mMovieId = Integer.parseInt(remoteMessage.getData().get("id"));
-        String posterUrl = remoteMessage.getData().get("poster");
-        Intent intent = MoviesDetailActivity.getIntent(this, mMovieId);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        Log.d("TAG", "getIntent: What's happening?" + mMovieId);
+        getMovie(remoteMessage);
 
-        Bitmap poster = null;
-        try {
-            URL url = new URL(posterUrl);
-            poster = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+    }
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.notification_icon)
-                .setContentTitle(remoteMessage.getData().get("notification_title"))
-                .setContentText(remoteMessage.getData().get("notification_body"))
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(remoteMessage.getData().get("notification_body")))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .addAction(R.drawable.notification_icon, getString(R.string.view_trailer),
-                        pendingIntent)
-                .setLargeIcon(poster)
-                .setStyle(new NotificationCompat.BigPictureStyle()
-                        .bigPicture(poster)
-                        .bigLargeIcon(null))
-                // Set the intent that will fire when the user taps the notification
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+    private void getMovie(RemoteMessage remoteMessage) {
+        Ion.with(this)
+                .load(Constants.apiBase + "movies/" + mMovieId)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        JsonObject moviesObject = result.getAsJsonObject("data");
+                        Movie movie = Movie.getMovie(moviesObject);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                        Log.d("TAG", "getIntent getMovie: " + movie.getName());
 
-        notificationManager.notify(mMovieId, builder.build());
+                        String posterUrl = remoteMessage.getData().get("poster");
+                        Intent intent = MoviesDetailActivity.getIntent(getBaseContext(), movie);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Intent[] intents = new Intent[2];
+                        intents[0] = intent;
+                        intents[1] = MainActivity.getIntent(getBaseContext());
+                        PendingIntent pendingIntent = PendingIntent.getActivities(getBaseContext(), 0, intents, 0);
 
+                        Bitmap poster = null;
+                        try {
+                            URL url = new URL(posterUrl);
+                            poster = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                        } catch (IOException exception) {
+                            System.out.println(exception);
+                        }
+
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), CHANNEL_ID)
+                                .setSmallIcon(R.drawable.notification_icon)
+                                .setContentTitle(remoteMessage.getData().get("notification_title"))
+                                .setContentText(remoteMessage.getData().get("notification_body"))
+                                .setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText(remoteMessage.getData().get("notification_body")))
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .addAction(R.drawable.notification_icon, getString(R.string.view_trailer),
+                                        pendingIntent)
+                                .setLargeIcon(poster)
+                                .setStyle(new NotificationCompat.BigPictureStyle()
+                                        .bigPicture(poster)
+                                        .bigLargeIcon(null))
+                                // Set the intent that will fire when the user taps the notification
+                                .setContentIntent(pendingIntent)
+                                .setAutoCancel(true);
+
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getBaseContext());
+
+                        notificationManager.notify(mMovieId, builder.build());
+                    }
+                });
     }
 }

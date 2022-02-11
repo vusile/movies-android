@@ -190,5 +190,9 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
         Intent intent = MoviesDetailActivity.getIntent(this, movie);
         startActivity(intent);
     }
+
+    public static Intent getIntent(Context context) {
+        return new Intent(context, MainActivity.class);
+    }
 }
 

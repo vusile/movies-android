@@ -96,17 +96,20 @@ public class MoviesDetailActivity extends AppCompatActivity {
         if (extras != null) {
             if (extras.containsKey(EXTRA_MOVIE)) {
                 mMovie = extras.getParcelable(EXTRA_MOVIE);
+                Log.d("TAG", "getIntent movieName " + mMovie.getName());
                 getGoing();
             }
 
             if (extras.containsKey(EXTRA_MOVIE_ID)) {
                 mMovieId = extras.getInt(EXTRA_MOVIE_ID);
+                Log.d("TAG", "getIntent movieID: " + mMovieId);
                 getMovie();
             }
         }
     }
 
     private void getMovie() {
+        Log.d("TAG", "getIntent getItent get Movie: " + mMovieId);
         Ion.with(this)
                 .load(Constants.apiBase + "movies/" + mMovieId)
                 .asJsonObject()
@@ -176,6 +179,8 @@ public class MoviesDetailActivity extends AppCompatActivity {
     public static Intent getIntent(Context context, int movieId) {
         Intent intent = new Intent(context, MoviesDetailActivity.class);
 
+        Log.d("TAG", "getIntent with movieId: " + movieId);
+
         intent.putExtra(EXTRA_MOVIE_ID, movieId);
 
         return intent;
@@ -183,6 +188,8 @@ public class MoviesDetailActivity extends AppCompatActivity {
 
     public static Intent getIntent(Context context, Movie movie) {
         Intent intent = new Intent(context, MoviesDetailActivity.class);
+
+        Log.d("TAG", "getIntent with Movie" + movie.getName());
 
         intent.putExtra(EXTRA_MOVIE, movie);
 
